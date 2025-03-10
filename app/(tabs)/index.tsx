@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Droplets, Thermometer, Sun, Wind } from 'lucide-react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { LineChart } from '@/components/ChartWrapper';
 
 export default function Dashboard() {
   const sensorData = {

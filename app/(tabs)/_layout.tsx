@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Plane as Plant, Chrome as Home, Bell, Settings, CloudSun } from 'lucide-react-native';
+import { Plant2, Home, Bell, Settings, CloudSun } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -12,9 +12,15 @@ export default function TabLayout() {
           borderTopColor: '#e5e5e5',
           height: 60,
           paddingBottom: 8,
+          elevation: 0,
+          shadowOpacity: 0,
         },
         tabBarActiveTintColor: '#2F9E44',
         tabBarInactiveTintColor: '#666666',
+        tabBarLabelStyle: {
+          fontFamily: 'Montserrat-Medium',
+          fontSize: 12,
+        },
       }}>
       <Tabs.Screen
         name="index"
@@ -27,7 +33,7 @@ export default function TabLayout() {
         name="plants"
         options={{
           title: 'My Plants',
-          tabBarIcon: ({ color, size }) => <Plant size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Plant2 size={size} color={color} />,
         }}
       />
       <Tabs.Screen

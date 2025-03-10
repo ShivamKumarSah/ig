@@ -8,10 +8,9 @@ type WeatherIconProps = {
 };
 
 export function WeatherIcon({ icon: Icon, size = 24, color = '#212529' }: WeatherIconProps) {
-  // On web, we need to prevent the touch event warnings
+  // Remove all responder props on web platform
   const iconProps = Platform.select({
     web: {
-      // Remove touch event handlers on web
       onStartShouldSetResponder: undefined,
       onResponderTerminationRequest: undefined,
       onResponderGrant: undefined,

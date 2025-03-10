@@ -1,13 +1,14 @@
 import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { ArrowLeft, Droplets, Thermometer, Sun, Wind, Activity } from 'lucide-react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { LineChart } from '@/components/ChartWrapper';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const plants = {
   '1': {
     id: '1',
     name: 'Monstera Deliciosa',
-    image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://plus.unsplash.com/premium_photo-1669148911895-a95de51d09ca?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     health: 'Excellent',
     healthScore: 95,
     lastWatered: '2 days ago',
@@ -40,7 +41,78 @@ const plants = {
       'Fertilize monthly during growing season'
     ]
   },
-  // Add other plants here...
+  '2': {
+    id: '2',
+    name: 'Snake Plant',
+    image: 'https://images.unsplash.com/photo-1593482892290-f54927ae1bb6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    health: 'Good',
+    healthScore: 85,
+    lastWatered: '5 days ago',
+    nextWatering: 'In 3 days',
+    optimalConditions: {
+      moisture: '40-50%',
+      temperature: '18-27°C',
+      light: 'Low to bright indirect',
+      humidity: '40-50%'
+    },
+    currentConditions: {
+      moisture: 45,
+      temperature: 22,
+      light: 60,
+      humidity: 45
+    },
+    history: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [
+        {
+          data: [45, 45, 48, 46, 45, 44, 45],
+        },
+      ],
+    },
+    care: [
+      'Water only when soil is completely dry',
+      'Tolerates low light but prefers indirect bright light',
+      'Can handle low humidity environments',
+      'Rarely needs repotting',
+      'Minimal fertilization needed'
+    ]
+  },
+  '3': {
+    id: '3',
+    name: 'Peace Lily',
+    image: 'https://images.unsplash.com/photo-1616690248297-1ec539dd910f?q=80&w=1954&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    health: 'Needs Attention',
+    healthScore: 70,
+    lastWatered: '7 days ago',
+    nextWatering: 'Today',
+    optimalConditions: {
+      moisture: '60-70%',
+      temperature: '18-30°C',
+      light: 'Low to moderate',
+      humidity: '50-60%'
+    },
+    currentConditions: {
+      moisture: 55,
+      temperature: 24,
+      light: 50,
+      humidity: 45
+    },
+    history: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [
+        {
+          data: [65, 62, 58, 55, 52, 50, 55],
+        },
+      ],
+    },
+    care: [
+      'Water when top of soil feels dry',
+      'Keep away from direct sunlight',
+      'Mist leaves regularly',
+      'Feed with balanced fertilizer every 6 weeks',
+      'Remove yellow leaves promptly'
+    ]
+  }
 };
 
 export default function PlantDetails() {
@@ -62,11 +134,15 @@ export default function PlantDetails() {
           <ArrowLeft size={24} color="#212529" />
         </Pressable>
         <Image source={{ uri: plant.image }} style={styles.plantImage} />
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.7)']}
+          style={styles.imageOverlay}
+        >
+          <Text style={styles.plantName}>{plant.name}</Text>
+        </LinearGradient>
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.plantName}>{plant.name}</Text>
-        
         <View style={styles.healthSection}>
           <View style={styles.healthScore}>
             <Activity size={24} color="#2F9E44" />
@@ -123,6 +199,11 @@ export default function PlantDetails() {
               style: {
                 borderRadius: 16,
               },
+              propsForDots: {
+                r: '6',
+                strokeWidth: '2',
+                stroke: '#2F9E44'
+              }
             }}
             bezier
             style={styles.chart}
@@ -159,25 +240,44 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 20,
     padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   plantImage: {
     width: '100%',
-    height: 300,
+    height: 350,
     resizeMode: 'cover',
+  },
+  imageOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+    justifyContent: 'flex-end',
+    padding: 20,
   },
   content: {
     padding: 20,
   },
   plantName: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 28,
-    color: '#212529',
-    marginBottom: 20,
+    fontSize: 32,
+    color: '#ffffff',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   healthSection: {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 20,
     marginBottom: 20,
     shadowColor: '#000',
@@ -186,7 +286,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 8,
     elevation: 5,
   },
   healthScore: {
@@ -197,7 +297,7 @@ const styles = StyleSheet.create({
   },
   healthScoreText: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 32,
+    fontSize: 36,
     color: '#2F9E44',
     marginVertical: 8,
   },
@@ -241,7 +341,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 8,
     elevation: 5,
   },
   conditionValue: {
@@ -264,8 +364,8 @@ const styles = StyleSheet.create({
   },
   chartContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 20,
+    padding: 20,
     marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -273,12 +373,12 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 8,
     elevation: 5,
   },
   sectionTitle: {
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 18,
+    fontSize: 20,
     color: '#212529',
     marginBottom: 16,
   },
@@ -288,8 +388,8 @@ const styles = StyleSheet.create({
   },
   careSection: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 20,
+    padding: 20,
     marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -297,7 +397,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 8,
     elevation: 5,
   },
   careItem: {

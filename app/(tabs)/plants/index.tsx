@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import { Droplets, Thermometer, Sun } from 'lucide-react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const plants = [
   {
     id: '1',
     name: 'Monstera Deliciosa',
-    image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://plus.unsplash.com/premium_photo-1669148911895-a95de51d09ca?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     health: 'Excellent',
     healthScore: 95,
     lastWatered: '2 days ago',
@@ -19,7 +20,7 @@ const plants = [
   {
     id: '2',
     name: 'Snake Plant',
-    image: 'https://images.unsplash.com/photo-1593691509543-c55fb32e8a76?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1593482892290-f54927ae1bb6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     health: 'Good',
     healthScore: 85,
     lastWatered: '5 days ago',
@@ -32,7 +33,7 @@ const plants = [
   {
     id: '3',
     name: 'Peace Lily',
-    image: 'https://images.unsplash.com/photo-1593691509544-0635b56ad791?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1616690248297-1ec539dd910f?q=80&w=1954&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     health: 'Needs Attention',
     healthScore: 70,
     lastWatered: '7 days ago',
@@ -54,10 +55,13 @@ function getHealthColor(score: number) {
 export default function PlantsScreen() {
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
+      <LinearGradient
+        colors={['#2F9E44', '#40C057']}
+        style={styles.header}
+      >
         <Text style={styles.headerTitle}>My Plants</Text>
         <Text style={styles.headerSubtitle}>Monitoring {plants.length} plants</Text>
-      </View>
+      </LinearGradient>
 
       <View style={styles.plantsGrid}>
         {plants.map((plant) => (
@@ -109,28 +113,29 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     paddingTop: 60,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e5e5',
+    paddingBottom: 30,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
   },
   headerTitle: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 28,
-    color: '#212529',
-    marginBottom: 4,
+    fontSize: 32,
+    color: '#ffffff',
+    marginBottom: 8,
   },
   headerSubtitle: {
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
-    color: '#868e96',
+    color: '#ffffff',
+    opacity: 0.9,
   },
   plantsGrid: {
     padding: 16,
   },
   plantCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    marginBottom: 16,
+    borderRadius: 20,
+    marginBottom: 20,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: {
@@ -138,27 +143,27 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 8,
     elevation: 5,
   },
   plantImage: {
     width: '100%',
-    height: 200,
+    height: 220,
     resizeMode: 'cover',
   },
   plantInfo: {
-    padding: 16,
+    padding: 20,
   },
   plantName: {
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 18,
+    fontSize: 20,
     color: '#212529',
     marginBottom: 8,
   },
   healthContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   healthIndicator: {
     width: 8,
@@ -175,13 +180,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#f8f9fa',
-    padding: 12,
+    padding: 16,
     borderRadius: 12,
   },
   condition: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 6,
   },
   conditionText: {
     fontFamily: 'Montserrat-Regular',
